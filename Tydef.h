@@ -1,5 +1,20 @@
 #pragma once
 #include <iostream>
+#include <fstream>
+#include <string>
+#include <array>
+#include <map>
+#include <iomanip>
+
+using std::cout;
+using std::cin;
+using std::endl;
+using std::array;
+using std::showpos;
+using std::setfill;
+using std::internal;
+using std::noshowpos;
+using std::setw;
 
 typedef enum operation_code
 {

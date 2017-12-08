@@ -1,17 +1,6 @@
 #pragma once
 #include "Tydef.h"
-#include <iostream>
-#include <fstream>
-#include <string>
-#include <array>
-#include <map>
-#include <iomanip>
 
-using std::cout;
-using std::cin;
-using std::endl;
-using std::array;
-using std::showpos;
 
 class Simpletron
 {

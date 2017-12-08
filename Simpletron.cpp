@@ -25,11 +25,63 @@ void Simpletron::halt(void)
 	cout << "*** Simpletron execution terminated ***" << endl;
 
 	cout << "REGISTERS:" << endl;
-	cout << "accumulator               " << accumulator << endl;
-	cout << "instructorCounter         " << instructionCounter <<endl;
-	cout << "instructorRegister        " << InstructionRegister <<endl;
-	cout << "operationCode             " << OperationCode << endl;
-	cout << "operand                   " << Operand << endl;
+
+	//accumulator
+	if (accumulator / 10 != 0)
+	{
+		cout << "accumulator               " << showpos << accumulator << endl;
+	}
+	else
+	{
+		cout << "accumulator               " << showpos << setfill('0') << internal << setw(5);
+			cout  << accumulator << endl;
+	}
+
+	//instructionCOunter
+	if (instructionCounter / 1 != 0)
+	{
+		cout << "instructorCounter            " << noshowpos << instructionCounter << endl;
+	}
+	else
+	{
+		cout << "instructorCounter            " << noshowpos << setfill('0') << internal << setw(2);
+		cout << instructionCounter << endl;
+	}
+
+	//InstructionRegister
+	if (InstructionRegister / 10 != 0)
+	{
+		cout << "instructorRegister        " << showpos << InstructionRegister << endl;
+	}
+	else
+	{
+		cout << "instructorRegister        " << showpos << setfill('0') << internal << setw(5);
+		cout << InstructionRegister << endl;
+	}
+
+	//Operation
+	if (OperationCode / 1 != 0)
+	{
+		cout << "operationCode                " << noshowpos << OperationCode << endl;
+	}
+	else
+	{
+		cout << "operationCode                " << noshowpos << setfill('0') << internal << setw(2);
+		cout << OperationCode << endl;
+	}
+
+	//operation Code
+	if (Operand / 1 != 0)
+	{
+		cout << "operand                      " << noshowpos << Operand << endl;
+	}
+	else
+	{
+		cout << "operand                      " << noshowpos << setfill('0') << internal << setw(2);
+		cout << Operand << endl;
+	}
+	
+	
 	cout << endl;
 	cout << "MEMORY:" << endl;
 
@@ -42,13 +94,20 @@ void Simpletron::halt(void)
 		}
 		else
 		{ 
-			cout << std::noshowpos << std::setfill('0') << std::internal << i << "  ";
+			cout << std::noshowpos << std::setfill(' ') << setw(2) << i << "  ";
 		}
 		for (int j = 0; j < 10; ++j)
 		{
 			cout << showpos;
 			// setfill( '0' )
-			cout << Memory[i + j];
+			if (Memory[i + j] != 0)
+			{
+				cout << Memory[i + j];
+			}
+			else
+			{
+				cout << setfill('0') << internal << setw(5) << Memory[i + j];
+			}
 			cout << "  ";
 		}
 		cout << endl;
