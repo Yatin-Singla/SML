@@ -1,5 +1,22 @@
 #include "Simpletron.h"
 
+void Simpletron::Run_App(void)
+{
+	welcome();
+	program();
+	halt();
+	end();
+}
+
+//constructor
+Simpletron::Simpletron()
+{
+	for (int i = 0; i < 100; i++)
+	{
+		Memory[i] = 0;
+	}
+}
+
 //welcome function and provides the user with information they will need to know in order to use the program
 void Simpletron::welcome(void)
 {
@@ -9,12 +26,14 @@ void Simpletron::welcome(void)
 	cout << "*** location number and a question mark (?). ***" << endl;
 	cout << "*** You then type the word for that location. ***" << endl;
 	cout << "*** Type the sentinel -99999 to stop entering ***" << endl;
-	cout << "*** your program." << endl;
+	cout << "*** your program. ***" << endl;
+	cout << endl;
 }
 
 //print the end message and lets the user know that program has started executing
 void Simpletron::end(void)
 {
+	cout << endl;
 	cout << "*** Program loading completed ***" << endl;
 	cout << "*** Program execution begins ***" << endl;
 }
@@ -169,16 +188,28 @@ void Simpletron::setOperand(void)
 	Operand = InstructionRegister % 100;
 }
 
-void Simpletron::Run_App(void)
+//figures out which function to call and what to after everything has been gathered
+void Simpletron::program(void)
 {
-	halt();
+	auto var = Memory[0];
+	int i = 0;
+	while (i < 100 && var != -99999)
+	{
+		if (i < 10)
+		{
+			cout << noshowpos << setfill('0') << setw(2) << i << " ? ";
+		}
+		else
+		{
+			cout << noshowpos << i << " ? ";
+		}
+		cin >> var;
+		Memory[i] = var;
+		i++;
+	}
+
 }
 
-Simpletron::Simpletron()
-{
-	for (int i = 0; i < 100; i++)
-	{
-		Memory[i] = 0;
-	}
-}
+
+
 

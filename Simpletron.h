@@ -51,4 +51,6 @@ private:
 	void setOperationCode(void);
 	void setOperand(void);
 
+	void program(void);
+
 };
