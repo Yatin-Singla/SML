@@ -3,7 +3,7 @@
 void Simpletron::Run_App(void)
 {
 	welcome();
-	program();
+	//program();
 	halt();
 	end();
 }
@@ -15,6 +15,18 @@ Simpletron::Simpletron()
 	{
 		Memory[i] = 0;
 	}
+	Operation[READ] = &Simpletron::read;
+	Operation[WRITE] = &Simpletron::write;
+	Operation[LOAD] = &Simpletron::load; 
+	Operation[STORE] = &Simpletron::store;
+	Operation[ADD] = &Simpletron::add;
+	Operation[SUBTRACT] = &Simpletron::subtract;
+	Operation[DIVIDE] = &Simpletron::divide; 
+	Operation[MULTIPLY] = &Simpletron::multiply;
+	Operation[BRANCH] = &Simpletron::branch;
+	Operation[BRANCHNEG] = &Simpletron::branchneg;
+	Operation[BRANCHZERO] = &Simpletron::branchzero; 
+	Operation[HALT] = &Simpletron::halt;
 }
 
 //welcome function and provides the user with information they will need to know in order to use the program
@@ -46,87 +58,40 @@ void Simpletron::halt(void)
 	cout << "REGISTERS:" << endl;
 
 	//accumulator
-	if (accumulator / 10 != 0)
-	{
-		cout << "accumulator               " << showpos << accumulator << endl;
-	}
-	else
-	{
-		cout << "accumulator               " << showpos << setfill('0') << internal << setw(5);
+	cout << "accumulator               " << showpos << setfill('0') << internal << setw(5);
 			cout  << accumulator << endl;
-	}
+	
 
 	//instructionCOunter
-	if (instructionCounter / 1 != 0)
-	{
-		cout << "instructorCounter            " << noshowpos << instructionCounter << endl;
-	}
-	else
-	{
-		cout << "instructorCounter            " << noshowpos << setfill('0') << internal << setw(2);
-		cout << instructionCounter << endl;
-	}
+	cout << "instructorCounter            " << noshowpos << setfill('0') << internal << setw(2);
+	cout << instructionCounter << endl;
+	
 
 	//InstructionRegister
-	if (InstructionRegister / 10 != 0)
-	{
-		cout << "instructorRegister        " << showpos << InstructionRegister << endl;
-	}
-	else
-	{
-		cout << "instructorRegister        " << showpos << setfill('0') << internal << setw(5);
-		cout << InstructionRegister << endl;
-	}
+	cout << "instructorRegister        " << showpos << setfill('0') << internal << setw(5);
+	cout << InstructionRegister << endl;
+	
 
 	//Operation
-	if (OperationCode / 1 != 0)
-	{
-		cout << "operationCode                " << noshowpos << OperationCode << endl;
-	}
-	else
-	{
-		cout << "operationCode                " << noshowpos << setfill('0') << internal << setw(2);
-		cout << OperationCode << endl;
-	}
+	cout << "operationCode                " << noshowpos << setfill('0') << internal << setw(2);
+	cout << OperationCode << endl;
+	
 
 	//operation Code
-	if (Operand / 1 != 0)
-	{
-		cout << "operand                      " << noshowpos << Operand << endl;
-	}
-	else
-	{
-		cout << "operand                      " << noshowpos << setfill('0') << internal << setw(2);
-		cout << Operand << endl;
-	}
-	
-	
+	cout << "operand                      " << noshowpos << setfill('0') << internal << setw(2);
+	cout << Operand << endl;
+		
 	cout << endl;
 	cout << "MEMORY:" << endl;
 
 	cout << "        0      1      2      3      4      5      6      7      8      9" << endl;
 	for (int i = 0; i < 100 ; i = i + 10)
 	{
-		if(i > 9)
-		{
-			cout << std::noshowpos << i << "  ";
-		}
-		else
-		{ 
-			cout << std::noshowpos << std::setfill(' ') << setw(2) << i << "  ";
-		}
+		cout << std::noshowpos << std::setfill(' ') << setw(2) << i << "  ";
 		for (int j = 0; j < 10; ++j)
 		{
 			cout << showpos;
-			// setfill( '0' )
-			if (Memory[i + j] != 0)
-			{
-				cout << Memory[i + j];
-			}
-			else
-			{
-				cout << setfill('0') << internal << setw(5) << Memory[i + j];
-			}
+			cout << setfill('0') << internal << setw(5) << Memory[i + j];
 			cout << "  ";
 		}
 		cout << endl;
@@ -150,6 +115,11 @@ void Simpletron::write(void)
 void Simpletron::load(void)
 {
 	accumulator = Memory[Operand];
+}
+
+void Simpletron::store(void)
+{
+	Memory[Operand] = accumulator;
 }
 
 void Simpletron::add(void)
@@ -209,6 +179,22 @@ void Simpletron::program(void)
 	}
 
 }
+
+void Simpletron::branch(void)
+{
+
+}
+
+void Simpletron::branchneg(void)
+{
+
+}
+
+void Simpletron::branchzero(void)
+{
+
+}
+
 
 
 

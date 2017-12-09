@@ -29,12 +29,13 @@ private:
 	void end(void);
 	
     //to my understanding - returns a pointer to a function
-	//typedef int(*function)();
-	//std::map<int, function()> Operation;
+	/*typedef int(*function)();*/
+	std::map<int, void (Simpletron::*)(void)> Operation;
 
 	void read(void);//number represents where in memory
 	void write(void);
 	void load(void);
+	void store(void);
 	void add(void);
 	void subtract(void);
 	void divide(void);
