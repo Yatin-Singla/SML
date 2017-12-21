@@ -23,12 +23,11 @@ private:
 	int Operand = 0; //indicates the memory location on which current instruction operates
 	int InstructionRegister = 0;//we donot execute instructions directly from memory therefore we rather transfer the NEXT instruction to be performed from the memory to a variable
 	/*Instruction to be performed next so basically the whole word for the instruction*/
-
-	void welcome(void);	
-	
+	std::ifstream inputfile;
+	void welcome(void);		
 	void end(void);
 	
-    //to my understanding - returns a pointer to a function
+    //returns a pointer to a function
 	/*typedef int(*function)();*/
 	std::map<int, void (Simpletron::*)(void)> Operation;
 
@@ -53,5 +52,7 @@ private:
 	void setOperand(void);
 
 	void program(void);
+	//executes the program and runs the program
+	void execute(void);
 
 };

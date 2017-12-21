@@ -3,7 +3,9 @@
 void Simpletron::Run_App(void)
 {
 	welcome();
-	//program();
+	system("pause");
+	program();
+	system("pause");
 	halt();
 	end();
 }
@@ -15,6 +17,7 @@ Simpletron::Simpletron()
 	{
 		Memory[i] = 0;
 	}
+	//assigning the key
 	Operation[READ] = &Simpletron::read;
 	Operation[WRITE] = &Simpletron::write;
 	Operation[LOAD] = &Simpletron::load; 
@@ -27,6 +30,8 @@ Simpletron::Simpletron()
 	Operation[BRANCHNEG] = &Simpletron::branchneg;
 	Operation[BRANCHZERO] = &Simpletron::branchzero; 
 	Operation[HALT] = &Simpletron::halt;
+
+	inputfile.open("input.txt");
 }
 
 //welcome function and provides the user with information they will need to know in order to use the program
@@ -34,7 +39,7 @@ void Simpletron::welcome(void)
 {
 	cout << "*** Welcome to Simpletron! ***" << endl;
 	cout << "*** Please enter your program one instruction ***" << endl;
-	cout << "*** (or data word) ata a time. I will type the ***" << endl;
+	cout << "*** (or data word) at a time. I will type the ***" << endl;
 	cout << "*** location number and a question mark (?). ***" << endl;
 	cout << "*** You then type the word for that location. ***" << endl;
 	cout << "*** Type the sentinel -99999 to stop entering ***" << endl;
@@ -53,6 +58,7 @@ void Simpletron::end(void)
 //informs the user that the simpletron is finished executing th eprogram.
 void Simpletron::halt(void)
 {
+	cout << endl;
 	cout << "*** Simpletron execution terminated ***" << endl;
 
 	cout << "REGISTERS:" << endl;
@@ -60,27 +66,22 @@ void Simpletron::halt(void)
 	//accumulator
 	cout << "accumulator               " << showpos << setfill('0') << internal << setw(5);
 			cout  << accumulator << endl;
-	
 
 	//instructionCOunter
 	cout << "instructorCounter            " << noshowpos << setfill('0') << internal << setw(2);
 	cout << instructionCounter << endl;
-	
 
 	//InstructionRegister
 	cout << "instructorRegister        " << showpos << setfill('0') << internal << setw(5);
 	cout << InstructionRegister << endl;
-	
 
 	//Operation
 	cout << "operationCode                " << noshowpos << setfill('0') << internal << setw(2);
 	cout << OperationCode << endl;
-	
 
 	//operation Code
 	cout << "operand                      " << noshowpos << setfill('0') << internal << setw(2);
 	cout << Operand << endl;
-		
 	cout << endl;
 	cout << "MEMORY:" << endl;
 
@@ -96,13 +97,16 @@ void Simpletron::halt(void)
 		}
 		cout << endl;
 	}
-
 }
 
 void Simpletron::read(void)//number represents where in memory location
 {
 	//some kind of check if memory is not corrupted, available, inbounds?
-	cin >> Memory[Operand];
+	while (Memory[Operand] >= -9999 && Memory[Operand] <= 9999)
+	{
+		//no reprompt message
+		cin >> Memory[Operand];
+	}
 }
 
 //writes to the output screen
@@ -161,8 +165,10 @@ void Simpletron::setOperand(void)
 //figures out which function to call and what to after everything has been gathered
 void Simpletron::program(void)
 {
-	auto var = Memory[0];
-	int i = 0;
+	cout << endl;
+	cout << "Press 1 to manually enter the commands else press 2 to enter commands from a file.\n";
+	int var = 0, i = 0, choice = 0;
+	cin >> choice;
 	while (i < 100 && var != -99999)
 	{
 		if (i < 10)
@@ -173,29 +179,62 @@ void Simpletron::program(void)
 		{
 			cout << noshowpos << i << " ? ";
 		}
-		cin >> var;
+		if (choice == 1)
+		{
+			cin >> var;
+		}
+		else
+		{
+			inputfile >> var;
+			cout << showpos << internal << setw(5) << var << endl;
+			_sleep(1000);
+		}
 		Memory[i] = var;
 		i++;
 	}
+	system("pause");
+	execute();
 
 }
 
 void Simpletron::branch(void)
 {
-
+	instructionCounter = Operand;
+	//InstructionRegister = Memory[instructionCounter];
 }
 
 void Simpletron::branchneg(void)
 {
-
+	if (accumulator < 0)
+	{
+		instructionCounter = Operand;
+	}
 }
 
 void Simpletron::branchzero(void)
 {
-
+	if (accumulator == 0)
+	{
+		instructionCounter = Operand;
+	}
 }
 
-
+void Simpletron::execute(void)
+{
+	//grabs the word from the memory and is copied into the register so that it can be processed.
+	while (OperationCode != 43)
+	{
+		setInstructionRegister();
+		setOperand();
+		setOperationCode();
+		Operation[OperationCode];
+		if (OperationCode != 40 && OperationCode != 41 && OperationCode != 42)
+		{
+			instructionCounter++;
+		}
+	}
+}
+//error checking
 
 
 
